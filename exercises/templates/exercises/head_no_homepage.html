@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}
+Nom de l'utilisateur :
+    <p>{{ user.username }}</p>
+    <p><a href="/logout">Se déconnnecter</a></p>
+    {% else %}
+    Vous n'êtes pas connecté
+    {% endif %}

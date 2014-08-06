@@ -1,0 +1,20 @@
+{% extends "exercises/base_no_homepage.html" %}
+
+{% block content %}
+
+    <h2>Exercises</h2>
+    <ul>
+    {% for exercise, exercise_value in exercise_list.items %}
+        <li>{{ exercise }}
+
+        <ul>
+            {% for exo, exo_value in exercise_value.items %}
+            <li><a href="{{exercise}}/{{exo}}">Exercise {{ exo }}</a></li>
+            {% endfor %}
+        </ul>
+
+        </li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

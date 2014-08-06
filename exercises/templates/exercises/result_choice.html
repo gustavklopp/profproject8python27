@@ -1,0 +1,40 @@
+{% extends "exercises/base.html" %}
+
+{% block content %}
+
+{% for ob in obj %}
+    <table border="1px">
+
+    <tr>
+    <th rowspan="2">Elèves</th>
+    <th>{{ ob.0.discipline }}</th>
+    </tr>
+    <tr>
+    <th>exercice {{ ob.0.exo_number }}</th>
+    </tr>
+
+    {% for item in ob %}
+        <tr>
+        {% if item.user %}
+
+
+        <td >{{ item.user }}</td>
+        {% if item.result < 50 %}
+        <td class="result" style="background-color: red;">{{ item.result }}%</td>
+        {% elif item.result < 75 %}
+        <td class="result" style="background-color: orange;">{{ item.result }}%</td>
+        {% else %}
+        <td class="result" style="background-color: orange;">{{ item.result }}%</td>
+        {% endif %}
+
+        {% else %}
+        <td colspan="2">Aucun élève</td>
+        {% endif %}
+        </tr>
+
+    {% endfor %}
+
+    </table>
+{% endfor %}
+
+{% endblock %}

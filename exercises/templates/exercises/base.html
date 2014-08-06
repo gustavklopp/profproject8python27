@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>{% block title %}{% endblock %}</title>
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'exercises/style.css' %}" />
+
+</head>
+<body>
+<h1>Pr. Delatoile</h1>
+{% block header %}
+{% include "exercises/head.html" %}
+{% endblock %}
+<hr>
+{% block content %}{% endblock %}
+{% block footer %}
+<hr>
+<p>Pr.Delatoile - 2014</p>
+{% endblock %}
+</body>
+</html>

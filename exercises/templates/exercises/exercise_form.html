@@ -1,0 +1,42 @@
+{% extends "exercises/base.html" %}
+
+{% block content %}
+
+<h2>{{discipline}} </h2>
+
+<form  method="post">
+{% csrf_token %}
+    {% for exo in truth %}
+        {% if forloop.first %}<h3>Exercice {{exo.0.exo_number}}</h3>{% endif %}
+
+        {% if exo.0.file %}
+        {% with exo.0.file.name|cut:"static/" as filename %}
+        {% load staticfiles %}
+        <audio controls>
+        <source src="{% static filename %}" type="audio/mpeg">
+        <embed height="50" width="100" src="{% static filename %}">
+        </audio>
+        {% endwith %}
+        {% endif %}
+
+        <label for="{{exo.0.question}}">{{ exo.0.question }}</label>
+        {% if not new %}<p>
+            {% if exo.1 %}{{ exo.0.answer }} est VRAI!
+            {% else %}<input type="text" name="user_answer_text{{forloop.counter}}" value="" />
+                      <input type="hidden" name="user_answer_id{{forloop.counter}}" value="{{exo.0.id}}" /><p>FAUX!</p>
+            {% endif %}</p>
+
+        {% else %}
+        <input type="text" name="user_answer_text{{forloop.counter}}" value="" />
+        <input type="hidden" name="user_answer_id{{forloop.counter}}" value="{{exo.0.id}}" />
+        {% endif %}
+
+       <hr>
+    {% endfor %}
+    <p>Résultat actuel = {% if not new %}{{ score }}%{% else %}(Exercice pas encore effectué){% endif %}</p>
+<input type="submit" value="Soumettre" />
+</form>
+
+
+{% endblock %}
+

@@ -52,7 +52,7 @@ class Exo(models.Model):
 
 
 class ExoResult(Exo):
-    result = models.IntegerField()
+    result = models.IntegerField(null=True)
 
     def result_to_letter(self):
         if self.result < 50:

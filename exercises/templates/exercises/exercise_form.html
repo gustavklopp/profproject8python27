@@ -66,11 +66,15 @@
             {% endif %}
         {% endif %}
         </li>
-       
+
     {% endfor %}
     </ol>
     <p>Résultat actuel = {% if not new %}<span class="score_{{score}}"> {{ score }} </span>{% else %}(Exercice pas encore effectué){% endif %}</p>
+{% if score != 'A' or new == True %}
 <input type="submit" value="Soumettre" />
+{% else %}
+<a href="/exercises">Retour à Liste des Exercices</a>
+{% endif %}
 </form>
 </div>
 

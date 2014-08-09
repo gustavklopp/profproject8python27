@@ -1,42 +1,78 @@
 {% extends "exercises/base.html" %}
 
+{% block nav %}
+{% include "exercises/nav_with_homepage.html" %}
+{% endblock %}
+
 {% block content %}
-
-<h2>{{discipline}} </h2>
-
+<h1 class="top">Répondez aux questions posées :</h1>
+<h1 class="discipline">{{discipline}} </h1>
+<div class="exercise">
+<ol class="exercise_form">
 <form  method="post">
 {% csrf_token %}
-    {% for exo in truth %}
-        {% if forloop.first %}<h3>Exercice {{exo.0.exo_number}}</h3>{% endif %}
 
-        {% if exo.0.file %}
-        {% with exo.0.file.name|cut:"static/" as filename %}
-        {% load staticfiles %}
-        <audio controls>
-        <source src="{% static filename %}" type="audio/mpeg">
-        <embed height="50" width="100" src="{% static filename %}">
-        </audio>
-        {% endwith %}
+    {% for exo in truth %}
+
+        {% if forloop.first %}<h2>Exercice {{exo.0.exo_number}}</h2>{% endif %}
+        <li>
+        {% if exo.0.file %}    {# the question is meant to be an audio question #}
+            <p>
+            {% with exo.0.file.name|cut:"static/" as filename %}
+            {% load staticfiles %}
+            <audio controls>
+            <source src="{% static filename %}" type="audio/mpeg">
+            <embed height="50" width="100" src="{% static filename %}">
+            </audio>
+            {% endwith %}
+            </p>
         {% endif %}
 
-        <label for="{{exo.0.question}}">{{ exo.0.question }}</label>
-        {% if not new %}<p>
-            {% if exo.1 %}{{ exo.0.answer }} est VRAI!
-            {% else %}<input type="text" name="user_answer_text{{forloop.counter}}" value="" />
-                      <input type="hidden" name="user_answer_id{{forloop.counter}}" value="{{exo.0.id}}" /><p>FAUX!</p>
+
+        <label for="{{exo.0.question}}">
+        {% if exo.0.question_as_list|length > 1 %} {# the question is meant to be a checkbox #}
+        {{ exo.0.question_as_list.0 }}{% else %}{{ exo.0.question }}{% endif %}</label>
+
+        {% if not new %}<p>  {# what it looks when the user has filled it with his answer #}
+
+            {% if exo.1 %}<strong>{{ exo.0.answer_to_formatedanswer }}</strong><span style="color: green"> &#10004;</span>  {# answer display formated due to checkbox particularity #}
+            {% else %}
+                {% if exo.0.question_as_list|length > 1 %} {# the question is meant to be a checkbox #}
+                    {% for ask in exo.0.question_as_list %}
+                        {% if forloop.first %}
+                        {% else %} <p><input type="checkbox" name="user_answer_text{{forloop.parentloop.counter}}" value="{{ ask }};" />{{ ask }}</p>
+                                   <input type="hidden" name="user_answer_id{{forloop.parentloop.counter}}" value="{{exo.0.id}}" />
+                        {% endif %}
+                        {% endfor %}<p><span style="color: red">&#10008;</span> ré-essayer de nouveau</p>
+
+                {% else %}
+                      <input type="text" name="user_answer_text{{forloop.counter}}" value="" />
+                      <input type="hidden" name="user_answer_id{{forloop.counter}}" value="{{exo.0.id}}" /><p><span style="color: red">&#10008;</span> ré-essayer de nouveau</p>
+                {% endif %}
             {% endif %}</p>
 
-        {% else %}
-        <input type="text" name="user_answer_text{{forloop.counter}}" value="" />
-        <input type="hidden" name="user_answer_id{{forloop.counter}}" value="{{exo.0.id}}" />
-        {% endif %}
 
-       <hr>
+        {% else %}            {# First time for the user to fill in this exercise #}
+            {% if exo.0.question_as_list|length > 1 %} {# the question is meant to be a checkbox #}
+                {% for ask in exo.0.question_as_list %}
+                    {% if forloop.first %}
+                    {% else %} <p><input type="checkbox" name="user_answer_text{{forloop.parentloop.counter}}" value="{{ ask }};" />{{ ask }}</p>
+                               <input type="hidden" name="user_answer_id{{forloop.parentloop.counter}}" value="{{exo.0.id}}" />
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p><input type="text" name="user_answer_text{{forloop.counter}}" value="" /></p>
+                <input type="hidden" name="user_answer_id{{forloop.counter}}" value="{{exo.0.id}}" />
+            {% endif %}
+        {% endif %}
+        </li>
+       
     {% endfor %}
-    <p>Résultat actuel = {% if not new %}{{ score }}%{% else %}(Exercice pas encore effectué){% endif %}</p>
+    </ol>
+    <p>Résultat actuel = {% if not new %}<span class="score_{{score}}"> {{ score }} </span>{% else %}(Exercice pas encore effectué){% endif %}</p>
 <input type="submit" value="Soumettre" />
 </form>
-
+</div>
 
 {% endblock %}
 

@@ -6,18 +6,21 @@
 {% load staticfiles %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'exercises/style.css' %}" />
-
 </head>
+
 <body>
-<h1>Pr. Delatoile</h1>
-{% block header %}
-{% include "exercises/head.html" %}
+<a href="/exercises">
+<div class="banner"></div></a>
+{% block nav %}
 {% endblock %}
-<hr>
-{% block content %}{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+<div class="footer">
 {% block footer %}
-<hr>
-<p>Pr.Delatoile - 2014</p>
+<p>Classe Virtuelle - 2014</p>
 {% endblock %}
+</div>
 </body>
 </html>

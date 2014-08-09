@@ -1,7 +1,8 @@
 {% if user.is_authenticated %}
-Nom de l'utilisateur :
-    <p>{{ user.username }}</p>
-    <p><a href="/logout">Se déconnnecter</a></p>
+<ul class="nav">
+<li>Nom de l'utilisateur :{{ user.username }}</li>
+<li><a href="/logout">Se déconnnecter</a></li>
+</ul>
     {% else %}
     Vous n'êtes pas connecté
     {% endif %}

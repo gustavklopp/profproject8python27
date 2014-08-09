@@ -1,12 +1,16 @@
 {% extends "exercises/base.html" %}
 
+{% block nav %}
+{% include "exercises/nav_with_homepage.html" %}
+{% endblock %}
+
 {% block content %}
 
 {% for ob in obj %}
-    <table border="1px">
+    <table class="results">
 
     <tr>
-    <th rowspan="2">Elèves</th>
+    <th rowspan="2" class="students">Elèves</th>
     <th>{{ ob.0.discipline }}</th>
     </tr>
     <tr>
@@ -17,15 +21,8 @@
         <tr>
         {% if item.user %}
 
-
-        <td >{{ item.user }}</td>
-        {% if item.result < 50 %}
-        <td class="result" style="background-color: red;">{{ item.result }}%</td>
-        {% elif item.result < 75 %}
-        <td class="result" style="background-color: orange;">{{ item.result }}%</td>
-        {% else %}
-        <td class="result" style="background-color: orange;">{{ item.result }}%</td>
-        {% endif %}
+        <td class="student">{{ item.user }}</td>
+        <td class="score_{{item.result_to_letter}}">{{ item.result_to_letter }}</td>
 
         {% else %}
         <td colspan="2">Aucun élève</td>

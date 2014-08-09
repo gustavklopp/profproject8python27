@@ -20,6 +20,17 @@ def ExerciseIndex(request):
     else:
         qr = Exercise.objects.all()
         qr_dict = obj_into_dic(qr, 'discipline', 'exo_number')
+        qr_results = []
+        for disc, val in qr_dict.items():  # get the score for each exercise for the request.user
+            for exo, val2 in val.items():
+                qs = ExoResult.objects.filter(user=request.user.id,
+                                              exo_number=exo,
+                                              discipline_id=disc)
+                if not qs:
+                    qs = [None]
+                val2.extend(qs)
+
+        #import pdb; pdb.set_trace()
         return render(request, 'exercises/exercise_index.html', {'exercise_list': qr_dict})
 
 
@@ -27,6 +38,7 @@ def ExerciseIndex(request):
 def ExerciseResult(request):
     qr = Exercise.objects.all()
     qr_dict = obj_into_dic(qr, 'discipline', 'exo_number')
+    #import pdb; pdb.set_trace()
     return render(request, 'exercises/exercise_result.html', {'exercise_list': qr_dict})
 
 
@@ -52,14 +64,15 @@ def ExerciseForm(request, discipline, exo_number):
     exo_list = Exercise.objects.filter(discipline__name=discipline, exo_number=exo_number)
     truth_mask = [True for x in range(len(exo_list))]
     new = True
-    #import pdb; pdb.set_trace()
     if request.method == 'POST':
+        #import pdb; pdb.set_trace()
         forloop_nb = 1  # used for the forloop
         for exo in exo_list:
             posted_id = request.POST.get('user_answer_id'+str(forloop_nb))
             if posted_id:
                 new = False  # it is being tried
-                posted_answer = request.POST['user_answer_text'+str(forloop_nb)]
+                posted_answer = request.POST.getlist('user_answer_text'+str(forloop_nb))
+                posted_answer = ''.join(posted_answer)
                 currentexo = Exercise.objects.get(id=posted_id)
                 if currentexo.answer == posted_answer:
                     truth_mask[forloop_nb-1] = True
@@ -108,6 +121,12 @@ def ExerciseForm(request, discipline, exo_number):
         k += 1
 
     score = round((sum(truth_mask)*100)/len(truth_mask))
+    if score < 50:    # translate score in number to letters
+        score = 'C'
+    elif score < 75:
+        score = 'B'
+    else:
+        score = 'A'
     # export to the template
     truth = list(zip(exo_list, truth_mask))
     context = {'exo_list': exo_list, 'discipline': discipline, 'truth': truth, 'new': new, 'score': score}

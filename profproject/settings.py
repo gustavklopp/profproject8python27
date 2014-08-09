@@ -45,7 +45,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -60,9 +60,10 @@ WSGI_APPLICATION = 'profproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'profproject',
-        'USER': 'root',
+        'HOST': 'mysql.server',
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'classevirtuelle$profproject',
+        'USER': 'classevirtuelle',
         'PASSWORD': 'root',
     }
 }
@@ -85,6 +86,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#STATIC_ROOT = '/home/classevirtuelle/profproject/profproject/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),

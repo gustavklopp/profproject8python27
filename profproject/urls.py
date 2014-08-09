@@ -4,6 +4,7 @@ from django.contrib.auth.views import login, logout
 
 from exercises import views
 
+admin.autodiscover()
 
 urlpatterns = [
     # Examples:

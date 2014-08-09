@@ -61,7 +61,7 @@ WSGI_APPLICATION = 'profproject.wsgi.application'
 DATABASES = {
     'default': {
         'HOST': 'mysql.server',
-        'ENGINE': 'mysql.connector.django',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'classevirtuelle$profproject',
         'USER': 'classevirtuelle',
         'PASSWORD': 'root',

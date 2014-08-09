@@ -1,0 +1,8 @@
+<ul class="nav">
+{% if user.is_staff %}
+<li><a href="/admin"><strong>Aller sur Site Admin</strong></a></li>
+{% endif %}
+<li><a href="/exercises">Retour à Liste des Exercices</a></li>
+<li>Nom de l'utilisateur: <strong>{{ user.username }}</strong></li>
+<li><a href="/logout">Se déconnecter</a></li>
+</ul>

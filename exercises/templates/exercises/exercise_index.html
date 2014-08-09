@@ -1,20 +1,35 @@
-{% extends "exercises/base_no_homepage.html" %}
+{% extends "exercises/base.html" %}
+
+{% block nav %}
+    {% include "exercises/nav_no_homepage.html" %}
+{% endblock %}
 
 {% block content %}
 
-    <h2>Exercises</h2>
+    <h1 class="top">Liste des Exercises</h1>
+    <div class="discipline">
     <ul>
-    {% for exercise, exercise_value in exercise_list.items %}
-        <li>{{ exercise }}
+        {% for exercise, exercise_value in exercise_list.items %}
 
-        <ul>
-            {% for exo, exo_value in exercise_value.items %}
-            <li><a href="{{exercise}}/{{exo}}">Exercise {{ exo }}</a></li>
-            {% endfor %}
-        </ul>
+        <li><h2>{{ exercise }}</h2>
 
+            <ul>
+                {% for exo, exo_value in exercise_value.items %}
+                <div class="exercise">
+                <li><span class="exercise_name"><a href="{{exercise}}/{{exo}}">Exercice {{ exo }}</a></span>
+                    {% with exo_value|last as last %}
+
+                        {% if last.result == None %}Pas encore effectué
+                        {% else %}<span class="score_{{ last.result_to_letter }}">{{ last.result_to_letter }} </span>
+                        {% endif %}
+                    {% endwith %}
+                </li>
+                </div>
+                {% endfor %}
+            </ul>
         </li>
-    {% endfor %}
-    </ul>
 
+        {% endfor %}
+    </ul>
+    </div>
 {% endblock %}

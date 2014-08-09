@@ -1,4 +1,4 @@
-{% extends "exercises/base_no_homepage.html" %}
+{% extends "exercises/base.html" %}
 
 {% block content %}
 
@@ -6,16 +6,22 @@
   <p class="error">Désolé, l'identifiant et/ou le mot de passe sont incorrects</p>
 {% endif %}
 
+<div class="login">
   <form action="" method="post">
   {% csrf_token %}
+  <p>
   <label for="username">Identifiant:</label>
   <input type="text" name="username" value="" id="username">
-  
+  </p>
+  <p>
   <label for="password">Mot de passe:</label>
   <input type="password" name="password" value="" id="password">
+  </p>
+  <p>
 
   <input type="submit" value="S'identifier" />
   <input type="hidden" name="next" value="{% url 'exercise_index' %}" />
+  </p>
   </form>
-
+</div>
 {% endblock %}

@@ -1,19 +1,26 @@
-{% extends "exercises/base_no_homepage.html" %}
+{% extends "exercises/base.html" %}
+
+{% block nav %}
+{% include "exercises/nav_no_homepage.html" %}
+{% endblock %}
 
 {% block content %}
+    <h1 class="top">Choix des Exercises à analyser</h1>
 
-    <h2>Exercices</h2>
     {% csrf_token %}
     <form method="post" action="/exercises/results/choice">
     {% csrf_token %}
 
+<div class="discipline">
 <ul>
 {% for exercise, exercise_value in exercise_list.items %}
-<li>{{ exercise }}
+<li><h2>{{ exercise }}</h2>
 
         <ul>
         {% for exo, exo_value in exercise_value.items %}
-        <li>Exercise {{ exo }}<input type="checkbox" name="choice_nb{{forloop.parentloop.counter}}" value="{{exercise}}/{{exo}}"></li>
+        <div class="exercise">
+        <li><input type="checkbox" name="choice_nb{{forloop.parentloop.counter}}" value="{{exercise}}/{{exo}}">Exercice {{ exo }}</li>
+        </div>
         {% endfor %}
         </ul>
 
@@ -21,6 +28,7 @@
         {% endfor %}
 </ul>
 <input type="submit" value="Choisir" />
+</div>
 <form/>
 
 {% endblock %}

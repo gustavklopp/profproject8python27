@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% block userlinks %}
+{% url 'django-admindocs-docroot' as docsroot %}
+{% if docsroot %}
+<a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+{% endif %}
+{% if user.has_usable_password %}
+<a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+{% endif %}
+<a href="/exercises">{% trans 'Go back to main site' %}</a>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Classe Virtuelle - admin</a></h1>
+{% endblock %}

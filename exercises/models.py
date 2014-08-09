@@ -17,10 +17,21 @@ class Exercise(models.Model):
     question = models.CharField(max_length=300)
     answer = models.CharField(max_length=30)
     question_date = models.DateField()
-    file = models.FileField(upload_to='static/exercises')
+    file = models.FileField(upload_to='static/exercises', null=True, blank=True)
 
     def __str__(self):
         return "{0} / {1!s}".format(self.discipline, self.exo_number)
+
+    def question_as_list(self):  # used to send question to a checkbox template
+        return self.question[:-1].split(';')
+
+    def answer_to_formatedanswer(self):  # removed the ';' in the end if checkbox
+        formatedanswer = self.answer[:]
+        if formatedanswer[-1] == ';':
+            formatedanswer = formatedanswer[:-1].split(';')
+            formatedanswer = ' et '.join(formatedanswer)
+        return formatedanswer
+
 
 """ classes containing the result. Exoresult: with the total score for one exercise,
                                    Exoresultdetail: score (bool) for each question inside exercise."""
@@ -42,6 +53,14 @@ class Exo(models.Model):
 
 class ExoResult(Exo):
     result = models.IntegerField()
+
+    def result_to_letter(self):
+        if self.result < 50:
+            return 'C'
+        elif self.result < 75:
+            return 'B'
+        else:
+            return 'A'
 
 
 class ExoResultDetail(Exo):

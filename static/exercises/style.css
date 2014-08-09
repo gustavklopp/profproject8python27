@@ -1,1 +1,160 @@
+body{
+    margin:0;
+    padding:0;
+    font-size:18px;
+    font-family:Georgia, "Times New Roman", Times, serif;
+    color:#787878;
+    background-color:#E0E0E0;
+    position:relative;
+    display:block;
+    margin:0 auto 0;
+    width:1000px;
+
+}
+
+/* login.html */
+
+.login {
+    border: solid 1px;
+    margin: 120px 120px 250px 120px;
+    box-shadow: 4px 6px 2px;
+}
+
+.login label{
+    display: inline-block;
+    width : 20em;
+    float: left;
+    vertical-align: top;
+    text-align: right;
+    margin-right: 15px;
+}
+
+.login input[type="submit"]{
+    margin-left: 550px;
+}
+
+/* navigation bar at the top */
+.nav{
+    margin-top: -22px;
+}
+ul.nav{
+    margin-left: 0px;
+    padding-left: 0px;
+    list-style: none;
+    border-bottom: 1px dashed #000;
+    padding-bottom: 5px;
+    text-align: right;
+}
+
+.nav li{
+    display: inline;
+    border: 1px dashed #000;
+    border-bottom: none;
+    padding: 5px 15px 5px 15px;
+    background-color: #EAEAEA;
+    margin-right: -6px;
+}
+
+.nav a{
+    text-decoration: none;
+    color: inherit;
+}
+
+/* exercises_index */
+.top{
+    border-bottom-style: double;
+
+}
+
+.discipline{
+    background-color: white;
+    padding: 2px 15px;
+
+    list-style-type: inside;
+
+
+}
+
+.exercise{
+    background-color: #EAEAEA;
+    border-left: solid 6px;
+    list-style-type: none;
+    padding: 5px;
+    padding-left: 15px;
+
+}
+
+.exercise .exercise_name{
+    display: inline-block;
+    width : 10em;
+    float: left;
+    vertical-align: top;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.score_A{
+    background-color: green;
+    padding: 2px;
+    margin: 2px;
+    color: black;
+    text-align: center;
+}
+
+.score_B{
+    background-color: #FFA500;
+    padding: 2px;
+    margin: 2px;
+    color: black;
+    text-align: center;
+}
+
+.score_C{
+    background-color: red;
+    padding: 2px;
+    margin: 2px;
+    color: black;
+    text-align: center;
+}
+
+/* result_choice.html */
+.results{
+    width: 400px;
+    margin-left: 30px;
+    margin-bottom: 8px;
+    border-collapse: collapse;
+}
+
+.results th{
+    font-size: 1.1em;
+    border: 1px solid;
+    background: white;
+
+}
+
+.results .students{
+    background: #EAEAEA;
+    width: 40%;
+}
+
+.results td{
+    border: 1px solid;
+}
+
+.results .student{
+    background: #feeaea;
+}
+
+.footer{
+    margin-top: 15px;
+    border-top: solid 1px;
+    text-align: right;
+}
+
+.banner{
+    background-image: url(sky2.jpg);
+    width: 1000px;
+    height: 200px;
+    margin-top: 4px;
+}
 

@@ -1,2 +1,9 @@
+# ignore profproject/settings file (settings specific to host)
+profproject/settings.py
+
+# ignore tested banner
+static/exercises/sky.jpg
+
+# test...
 test.txt
 test2.txt

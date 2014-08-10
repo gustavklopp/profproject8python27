@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.db.models import Count, F
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,7 @@ import datetime
 from itertools import chain
 
 from exercises.models import Discipline, Exercise, ExoResult, ExoResultDetail
-from exercises.forms.exercise_form import ExerciseForm
+
 from exercises.obj_into_dic import obj_into_dic
 
 

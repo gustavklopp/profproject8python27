@@ -1,15 +1,16 @@
+from django.utils.encoding import python_2_unicode_compatible
+
 import os
 
 from django.db import models
 from django.contrib.auth.models import User
 
 
+@python_2_unicode_compatible
 class Discipline(models.Model):
     name = models.CharField(max_length=30)
-
     def __str__(self):
         return self.name
-
 
 class Exercise(models.Model):
     discipline = models.ForeignKey(Discipline)
@@ -19,8 +20,6 @@ class Exercise(models.Model):
     question_date = models.DateField()
     file = models.FileField(upload_to='static/exercises', null=True, blank=True)
 
-    def __str__(self):
-        return "{0} / {1!s}".format(self.discipline, self.exo_number)
 
     def question_as_list(self):  # used to send question to a checkbox template
         return self.question[:-1].split(';')
@@ -44,8 +43,7 @@ class Exo(models.Model):
     result_date = models.DateTimeField(null=True)
     try_number = models.IntegerField(default='1')
 
-    def __str__(self):
-        return "{0} / {1!s} / {2}".format(self.discipline, self.exo_number, self.user)
+
 
     class Meta:
         abstract = True
@@ -66,6 +64,3 @@ class ExoResult(Exo):
 class ExoResultDetail(Exo):
     truth = models.BooleanField(default=False)
     exo_number_detail = models.IntegerField(default=0)
-
-    def __str__(self):
-        return "{0}/{1!s}/{2!s}/{3}".format(self.discipline, self.exo_number, self.exo_number_detail, self.user)

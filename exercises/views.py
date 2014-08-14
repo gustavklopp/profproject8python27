@@ -128,9 +128,13 @@ def ExerciseForm(request, discipline, exo_number):
         score = 'B'
     else:
         score = 'A'
+    if score == 100:
+        perfect = True
+    else:
+        perfect = False
     # export to the template
     truth = list(zip(exo_list, truth_mask))
-    context = {'exo_list': exo_list, 'discipline': discipline, 'truth': truth, 'new': new, 'score': score}
+    context = {'exo_list': exo_list, 'discipline': discipline, 'truth': truth, 'new': new, 'score': score, 'perfect': perfect}
     return render(request, 'exercises/exercise_form.html', context)
 
 

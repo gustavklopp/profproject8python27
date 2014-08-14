@@ -5,7 +5,7 @@ from django.utils.encoding import python_2_unicode_compatible
 
 
 class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('discipline', 'exo_number', 'question')
+    list_display = ('discipline', 'exo_number', 'question', 'is_published')
     ordering = ('discipline', 'exo_number', )
     list_filter = ('discipline', 'exo_number', )
 

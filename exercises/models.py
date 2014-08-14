@@ -9,17 +9,18 @@ from django.contrib.auth.models import User
 @python_2_unicode_compatible
 class Discipline(models.Model):
     name = models.CharField(max_length=30)
+
     def __str__(self):
         return self.name
+
 
 class Exercise(models.Model):
     discipline = models.ForeignKey(Discipline)
     exo_number = models.IntegerField()
     question = models.CharField(max_length=300)
     answer = models.CharField(max_length=30)
-    question_date = models.DateField()
+    is_published = models.BooleanField(default=True)
     file = models.FileField(upload_to='static/exercises', null=True, blank=True)
-
 
     def question_as_list(self):  # used to send question to a checkbox template
         return self.question[:-1].split(';')
@@ -42,7 +43,6 @@ class Exo(models.Model):
     exo_number = models.IntegerField()
     result_date = models.DateTimeField(null=True)
     try_number = models.IntegerField(default='1')
-
 
 
     class Meta:

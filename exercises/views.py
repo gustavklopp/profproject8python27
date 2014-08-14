@@ -19,7 +19,7 @@ def ExerciseIndex(request):
     if request.user.is_staff:
         return redirect('/exercises/results')
     else:
-        qr = Exercise.objects.all()
+        qr = Exercise.objects.filter(is_published=True)
         qr_dict = obj_into_dic(qr, 'discipline', 'exo_number')
         qr_results = []
         for disc, val in qr_dict.items():  # get the score for each exercise for the request.user
@@ -62,7 +62,7 @@ def ExerciseResultChoice(request):
 
 @login_required
 def ExerciseForm(request, discipline, exo_number):
-    exo_list = Exercise.objects.filter(discipline__name=discipline, exo_number=exo_number)
+    exo_list = Exercise.objects.filter(discipline__name=discipline, exo_number=exo_number, is_published=True)
     truth_mask = [True for x in range(len(exo_list))]
     new = True
     if request.method == 'POST':

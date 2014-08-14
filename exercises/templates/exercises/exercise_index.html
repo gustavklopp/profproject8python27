@@ -20,7 +20,7 @@
                     {% with exo_value|last as last %}
 
                         {% if last.result == None %}Pas encore effectué
-                        {% else %}<span class="score_{{ last.result_to_letter }}">{{ last.result_to_letter }} </span>
+                        {% else %}<span class="score_{{ last.result_to_letter }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         {% endif %}
                     {% endwith %}
                 </li>

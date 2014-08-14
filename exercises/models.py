@@ -17,7 +17,7 @@ class Discipline(models.Model):
 class Exercise(models.Model):
     discipline = models.ForeignKey(Discipline)
     exo_number = models.IntegerField()
-    question = models.CharField(max_length=300)
+    question = models.TextField()
     answer = models.CharField(max_length=30)
     is_published = models.BooleanField(default=True)
     file = models.FileField(upload_to='static/exercises', null=True, blank=True)

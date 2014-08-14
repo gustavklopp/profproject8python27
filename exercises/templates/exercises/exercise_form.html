@@ -29,9 +29,9 @@
         {% endif %}
 
 
-        <label for="{{exo.0.question}}">
+        <label for="{{exo.0.question|linebreaksbr}}">
         {% if exo.0.question_as_list|length > 1 %} {# the question is meant to be a checkbox #}
-        {{ exo.0.question_as_list.0 }}{% else %}{{ exo.0.question }}{% endif %}</label>
+        {{ exo.0.question_as_list.0|safe|linebreaksbr}}{% else %}{{ exo.0.question|safe|linebreaksbr }}{% endif %}</label>
 
         {% if not new %}<p>  {# what it looks when the user has filled it with his answer #}
 

@@ -16,14 +16,22 @@
 
         {% if forloop.first %}<h2>Exercice {{exo.0.exo_number}}</h2>{% endif %}
         <li>
-        {% if exo.0.file %}    {# the question is meant to be an audio question #}
+        {% if exo.0.file %}    {# the question is meant to be an multimedia question #}
             <p>
             {% with exo.0.file.name|cut:"static/" as filename %}
             {% load staticfiles %}
+            {% if exo.0.file_extension == 'audio' %}
             <audio controls>
             <source src="{% static filename %}" type="audio/mpeg">
             <embed height="50" width="100" src="{% static filename %}">
             </audio>
+            {% elif exo.0.file_extension == 'image' %}
+            <br>
+            <img src="{% static filename %}">
+            {% elif exo.0.file_extension == 'pdf' %}
+            <br>
+            <embed src="{% static filename %}" width=800px height=800px>
+            {% endif %}
             {% endwith %}
             </p>
         {% endif %}

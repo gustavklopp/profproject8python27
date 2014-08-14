@@ -32,6 +32,16 @@ class Exercise(models.Model):
             formatedanswer = ' et '.join(formatedanswer)
         return formatedanswer
 
+    def file_extension(self):
+        name, extension = os.path.splitext(self.file.name)
+        if extension in ('.jpg', '.jpeg', '.png', '.gif'):
+            return 'image'
+        if extension in ('.wav', '.mp3'):
+            return 'audio'
+        if extension in ('.pdf'):
+            return 'pdf'
+        else:
+            return extension
 
 """ classes containing the result. Exoresult: with the total score for one exercise,
                                    Exoresultdetail: score (bool) for each question inside exercise."""

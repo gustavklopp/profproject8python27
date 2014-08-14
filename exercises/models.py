@@ -44,7 +44,6 @@ class Exo(models.Model):
     result_date = models.DateTimeField(null=True)
     try_number = models.IntegerField(default='1')
 
-
     class Meta:
         abstract = True
 

@@ -84,6 +84,10 @@ ul.nav{
 
 }
 
+.exercise input[type="text"]{
+    width: 800px;
+}
+
 .exercise .exercise_name{
     display: inline-block;
     width : 10em;

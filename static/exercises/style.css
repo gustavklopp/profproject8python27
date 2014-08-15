@@ -121,9 +121,17 @@ ul.nav{
     text-align: center;
 }
 
+.score_None{
+    background-color: #DCDCDC;
+    padding: 2px;
+    margin: 2px;
+    color: black;
+    text-align: center;
+}
+
 /* result_choice.html */
 .results{
-    width: 400px;
+
     margin-left: 30px;
     margin-bottom: 8px;
     border-collapse: collapse;
@@ -133,22 +141,30 @@ ul.nav{
     font-size: 1.1em;
     border: 1px solid;
     background: white;
+    width: auto;
 
 }
 
 .results .students{
     background: #EAEAEA;
-    width: 40%;
+
 }
 
 .results td{
     border: 1px solid;
+
 }
 
+.results td, th{
+    padding: 5px;
+}
 .results .student{
     background: #feeaea;
 }
 
+.results .table_exo_number{
+    font-weight: normal;
+}
 
 /* banner and footer */
 .footer{

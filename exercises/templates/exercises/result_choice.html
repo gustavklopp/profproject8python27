@@ -6,32 +6,35 @@
 
 {% block content %}
 
-{% for ob in obj %}
-    <table class="results">
+
+<table class="results">
+
+<tr>
+<th rowspan="2" class="students">Elèves</th>
+{% for exo in exo_choosen %}
+<th class="table_discipline">{{ exo.0 }}</th>
+{% endfor %}
+</tr>
+<tr>
+{% for exo in exo_choosen %}
+<th class="table_exo_number">exercice {{ exo.1 }}</th>
+{% endfor %}
+</tr>
+
+{% for zip in user_zip %}
 
     <tr>
-    <th rowspan="2" class="students">Elèves</th>
-    <th>{{ ob.0.discipline }}</th>
-    </tr>
-    <tr>
-    <th>exercice {{ ob.0.exo_number }}</th>
-    </tr>
-
-    {% for item in ob %}
-        <tr>
-        {% if item.user %}
-
-        <td class="student">{{ item.user }}</td>
-        <td class="score_{{item.result_to_letter}}">&nbsp;</td>
-
-        {% else %}
-        <td colspan="2">Aucun élève</td>
-        {% endif %}
-        </tr>
-
+     <td class="student">{{ zip.0 }}</td>
+    {% for exo in zip.1 %}
+        <td class="score_{{ exo }}">&nbsp;</td>
     {% endfor %}
 
-    </table>
+
+    </tr>
+
 {% endfor %}
+
+</table>
+
 
 {% endblock %}

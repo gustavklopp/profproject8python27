@@ -10,6 +10,7 @@ import datetime
 from itertools import chain
 
 from exercises.models import Discipline, Exercise, ExoResult, ExoResultDetail
+from django.contrib.auth.models import User
 
 from exercises.obj_into_dic import obj_into_dic
 
@@ -46,19 +47,28 @@ def ExerciseResult(request):
 @staff_member_required
 def ExerciseResultChoice(request):
     qs = []
-    for key in request.POST:
-        if key == 'csrfmiddlewaretoken':
-            continue
-        for item in request.POST.getlist(key):
-            discipline, exo_number = item.split('/')
-            qr = ExoResult.objects.filter(discipline__name=discipline, exo_number=exo_number)
-            if qr:
-                qs.append(qr)
-            else:
-                qs.append([{'discipline': discipline, 'exo_number': exo_number}])
+    index_qs = 0
+    user_list = User.objects.exclude(is_staff=True).values_list('username', flat=True)
+    exo_choosen = []
+    for user in user_list:
+        qs.append([])
+        for key in request.POST:
+            if key == 'csrfmiddlewaretoken':
+                continue
+            for item in request.POST.getlist(key):  # each key is an exercise
+                discipline, exo_number = item.split('/')
+                if user == user_list[0]:
+                    exo_choosen.append([discipline, exo_number])
+                qr = ExoResult.objects.filter(discipline__name=discipline, exo_number=exo_number, user__username=user)
+                if qr:
+                    qr = [qr[0].result_to_letter()]
+                else:
+                    qr = ['None']
+                qs[index_qs].extend(qr)
+        index_qs += 1
+    user_zip = zip(user_list, qs)
     #import pdb; pdb.set_trace()
-
-    return render(request, 'exercises/result_choice.html', {'obj': qs})
+    return render(request, 'exercises/result_choice.html', {'user_zip': user_zip, 'exo_choosen': exo_choosen})
 
 @login_required
 def ExerciseForm(request, discipline, exo_number):

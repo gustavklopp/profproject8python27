@@ -31,6 +31,15 @@ class ExoAlias(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        query = ExoAlias.objects.filter(discipline=self.discipline).order_by("-exo_number").values_list('exo_number', flat=True)
+        if query:
+            query = query[0]
+        else:
+            query = 0
+        self.exo_number = query + 1
+        super(ExoAlias, self).save(*args, **kwargs)
+
 
 class Exercise(models.Model):
     discipline = models.ForeignKey(Discipline, null=True, blank=True)

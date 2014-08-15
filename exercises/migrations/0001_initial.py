@@ -30,9 +30,9 @@ class Migration(SchemaMigration):
         # Adding model 'Exercise'
         db.create_table(u'exercises_exercise', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('discipline', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['exercises.Discipline'], null=True)),
+            ('discipline', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['exercises.Discipline'], null=True, blank=True)),
             ('title', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['exercises.ExoAlias'], null=True)),
-            ('exo_number', self.gf('django.db.models.fields.IntegerField')(null=True)),
+            ('exo_number', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('question', self.gf('django.db.models.fields.TextField')()),
             ('answer', self.gf('django.db.models.fields.CharField')(max_length=120)),
             ('is_published', self.gf('django.db.models.fields.BooleanField')(default=True)),
@@ -131,8 +131,8 @@ class Migration(SchemaMigration):
         u'exercises.exercise': {
             'Meta': {'object_name': 'Exercise'},
             'answer': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
-            'discipline': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['exercises.Discipline']", 'null': 'True'}),
-            'exo_number': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'discipline': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['exercises.Discipline']", 'null': 'True', 'blank': 'True'}),
+            'exo_number': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_published': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),

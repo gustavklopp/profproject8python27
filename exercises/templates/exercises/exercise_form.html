@@ -78,7 +78,7 @@
     {% endfor %}
     </ol>
     <p>Résultat actuel = {% if not new %}<span class="score_{{score}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{% else %}(Exercice pas encore effectué){% endif %}</p>
-{% if not perfect or new == True %}
+{% if not_perfect or new %}
 <input type="submit" value="Soumettre" />
 {% else %}
 <a href="/exercises">Retour à Liste des Exercices</a>

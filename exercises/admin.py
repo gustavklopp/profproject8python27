@@ -12,6 +12,9 @@ class ExerciseAdmin(admin.ModelAdmin):
     list_filter = ('discipline', 'exo_number', )
 
 
+class ExoAliasAdmin(admin.ModelAdmin):
+    readonly_fields = ('exo_number',)
+
 admin.site.register(Exercise, ExerciseAdmin)
 admin.site.register(Discipline)
-admin.site.register(ExoAlias)
+admin.site.register(ExoAlias, ExoAliasAdmin)

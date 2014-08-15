@@ -11,18 +11,31 @@ class Migration(SchemaMigration):
         # Adding model 'Discipline'
         db.create_table(u'exercises_discipline', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=30)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
         ))
         db.send_create_signal(u'exercises', ['Discipline'])
+
+        # Adding model 'ExoAlias'
+        db.create_table(u'exercises_exoalias', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=50, null=True)),
+            ('discipline', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['exercises.Discipline'])),
+            ('exo_number', self.gf('django.db.models.fields.IntegerField')()),
+        ))
+        db.send_create_signal(u'exercises', ['ExoAlias'])
+
+        # Adding unique constraint on 'ExoAlias', fields ['discipline', 'exo_number']
+        db.create_unique(u'exercises_exoalias', ['discipline_id', 'exo_number'])
 
         # Adding model 'Exercise'
         db.create_table(u'exercises_exercise', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('discipline', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['exercises.Discipline'])),
-            ('exo_number', self.gf('django.db.models.fields.IntegerField')()),
-            ('question', self.gf('django.db.models.fields.CharField')(max_length=300)),
-            ('answer', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('question_date', self.gf('django.db.models.fields.DateField')()),
+            ('discipline', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['exercises.Discipline'], null=True)),
+            ('title', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['exercises.ExoAlias'], null=True)),
+            ('exo_number', self.gf('django.db.models.fields.IntegerField')(null=True)),
+            ('question', self.gf('django.db.models.fields.TextField')()),
+            ('answer', self.gf('django.db.models.fields.CharField')(max_length=120)),
+            ('is_published', self.gf('django.db.models.fields.BooleanField')(default=True)),
             ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
         ))
         db.send_create_signal(u'exercises', ['Exercise'])
@@ -54,8 +67,14 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
+        # Removing unique constraint on 'ExoAlias', fields ['discipline', 'exo_number']
+        db.delete_unique(u'exercises_exoalias', ['discipline_id', 'exo_number'])
+
         # Deleting model 'Discipline'
         db.delete_table(u'exercises_discipline')
+
+        # Deleting model 'ExoAlias'
+        db.delete_table(u'exercises_exoalias')
 
         # Deleting model 'Exercise'
         db.delete_table(u'exercises_exercise')
@@ -107,17 +126,25 @@ class Migration(SchemaMigration):
         u'exercises.discipline': {
             'Meta': {'object_name': 'Discipline'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '30'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         u'exercises.exercise': {
             'Meta': {'object_name': 'Exercise'},
-            'answer': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'discipline': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['exercises.Discipline']"}),
-            'exo_number': ('django.db.models.fields.IntegerField', [], {}),
+            'answer': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
+            'discipline': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['exercises.Discipline']", 'null': 'True'}),
+            'exo_number': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'question': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
-            'question_date': ('django.db.models.fields.DateField', [], {})
+            'is_published': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'question': ('django.db.models.fields.TextField', [], {}),
+            'title': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['exercises.ExoAlias']", 'null': 'True'})
+        },
+        u'exercises.exoalias': {
+            'Meta': {'unique_together': "(('discipline', 'exo_number'),)", 'object_name': 'ExoAlias'},
+            'discipline': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['exercises.Discipline']"}),
+            'exo_number': ('django.db.models.fields.IntegerField', [], {}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True'})
         },
         u'exercises.exoresult': {
             'Meta': {'object_name': 'ExoResult'},

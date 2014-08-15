@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.utils.encoding import python_2_unicode_compatible
 
 import os
@@ -8,19 +9,42 @@ from django.contrib.auth.models import User
 
 @python_2_unicode_compatible
 class Discipline(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = u"1. Matière"
 
-class Exercise(models.Model):
+
+@python_2_unicode_compatible
+class ExoAlias(models.Model):
+    title = models.CharField(max_length=50, null=True)
     discipline = models.ForeignKey(Discipline)
     exo_number = models.IntegerField()
+
+    class Meta:
+        unique_together = (("discipline", "exo_number"))
+        verbose_name = "2. Identifiant des exercice"
+
+    def __str__(self):
+        return self.title
+
+
+class Exercise(models.Model):
+    discipline = models.ForeignKey(Discipline, null=True, blank=True)
+    title = models.ForeignKey(ExoAlias, null=True)
+    exo_number = models.IntegerField(null=True, blank=True)
     question = models.TextField()
-    answer = models.CharField(max_length=30)
+    answer = models.CharField(max_length=120)
     is_published = models.BooleanField(default=True)
     file = models.FileField(upload_to='static/exercises', null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.exo_number = self.title.exo_number
+        self.discipline = self.title.discipline
+        super(Exercise, self).save(*args, **kwargs)
 
     def question_as_list(self):  # used to send question to a checkbox template
         return self.question[:-1].split(';')
@@ -42,6 +66,9 @@ class Exercise(models.Model):
             return 'pdf'
         else:
             return extension
+
+    class Meta:
+        verbose_name = "3. Liste des exercice"
 
 """ classes containing the result. Exoresult: with the total score for one exercise,
                                    Exoresultdetail: score (bool) for each question inside exercise."""
@@ -73,3 +100,5 @@ class ExoResult(Exo):
 class ExoResultDetail(Exo):
     truth = models.BooleanField(default=False)
     exo_number_detail = models.IntegerField(default=0)
+
+

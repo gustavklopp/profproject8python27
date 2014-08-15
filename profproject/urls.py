@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^exercises/$', views.ExerciseIndex, name='exercise_index'),
-    url(r'exercises/(\w+)/(\d+)/$', views.ExerciseForm, name='exercise_form'),
+    url(r'exercises/([\w ]+)/(\d+)/$', views.ExerciseForm, name='exercise_form'),
     url(r'exercises/results/$', views.ExerciseResult, name='exercise_result'),
     url(r'exercises/results/choice$', views.ExerciseResultChoice, name='exercise_choice'),
 ]

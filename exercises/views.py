@@ -55,10 +55,12 @@ def ExerciseResultChoice(request):
         for key in request.POST:
             if key == 'csrfmiddlewaretoken':
                 continue
+            #import pdb; pdb.set_trace()
             for item in request.POST.getlist(key):  # each key is an exercise
-                discipline, exo_number = item.split('/')
+
+                discipline, exo_number, title = item.split('/')
                 if user == user_list[0]:
-                    exo_choosen.append([discipline, exo_number])
+                    exo_choosen.append([discipline, exo_number, title])
                 qr = ExoResult.objects.filter(discipline__name=discipline, exo_number=exo_number, user__username=user)
                 if qr:
                     qr = [qr[0].result_to_letter()]
@@ -67,7 +69,6 @@ def ExerciseResultChoice(request):
                 qs[index_qs].extend(qr)
         index_qs += 1
     user_zip = zip(user_list, qs)
-    #import pdb; pdb.set_trace()
     return render(request, 'exercises/result_choice.html', {'user_zip': user_zip, 'exo_choosen': exo_choosen})
 
 @login_required

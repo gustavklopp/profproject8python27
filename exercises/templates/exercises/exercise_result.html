@@ -19,7 +19,7 @@
         <ul>
         {% for exo, exo_value in exercise_value.items %}
         <div class="exercise">
-        <li><input type="checkbox" name="choice_nb{{forloop.parentloop.counter}}" value="{{exercise}}/{{exo}}">Exercice {{ exo }}</li>
+        <li><input type="checkbox" name="choice_nb{{forloop.parentloop.counter}}" value="{{exercise}}/{{exo}}/{{exo_value.0.title}}">Ex. {{ exo }}&nbsp;&nbsp;&nbsp;&nbsp;{{exo_value.0.title}}</li>
         </div>
         {% endfor %}
         </ul>

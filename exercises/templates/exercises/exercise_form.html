@@ -14,7 +14,7 @@
 
     {% for exo in truth %}
 
-        {% if forloop.first %}<h2>Exercice {{exo.0.exo_number}}</h2>{% endif %}
+        {% if forloop.first %}<h2>Ex. {{exo.0.exo_number}}&nbsp;&nbsp;&nbsp;&nbsp;{{exo.0.title}}</h2>{% endif %}
         <li>
         {% if exo.0.file %}    {# the question is meant to be an multimedia question #}
             <p>

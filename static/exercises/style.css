@@ -90,7 +90,7 @@ ul.nav{
 
 .exercise .exercise_name{
     display: inline-block;
-    width : 10em;
+    width : 30em;
     float: left;
     vertical-align: top;
     text-align: left;

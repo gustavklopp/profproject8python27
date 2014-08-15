@@ -16,9 +16,10 @@
             <ul>
                 {% for exo, exo_value in exercise_value.items %}
                 <div class="exercise">
-                <li><span class="exercise_name"><a href="{{exercise}}/{{exo}}">Exercice {{ exo }}</a></span>
-                    {% with exo_value|last as last %}
 
+                <li><span class="exercise_name"><a href="{{exercise}}/{{exo}}">ex.{{ exo }}&nbsp;&nbsp;&nbsp;&nbsp;{{exo_value.0.title}}</a></span>
+
+                        {% with exo_value|last as last %}
                         {% if last.result == None %}Pas encore effectué
                         {% else %}<span class="score_{{ last.result_to_letter }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         {% endif %}

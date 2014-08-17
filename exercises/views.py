@@ -3,10 +3,9 @@ from django.shortcuts import render, redirect
 from django.db.models import Count, F
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.utils import timezone
 from django.contrib.auth import logout
 
-import datetime
 from itertools import chain
 
 from exercises.models import Discipline, Exercise, ExoResult, ExoResultDetail
@@ -101,7 +100,7 @@ def ExerciseForm(request, discipline, exo_number):
                     d1.try_number = F('try_number') + 1
                     d1.truth = truth_mask[forloop_nb-1]
                 # in all cases, update result and date
-                d1.result_date = datetime.datetime.now()
+                d1.result_date = timezone.now()
                 d1.save()
             forloop_nb += 1
         # calculate the score :
@@ -114,7 +113,7 @@ def ExerciseForm(request, discipline, exo_number):
             p1.try_number = F('try_number') + 1
         # in all cases, update result and date
         p1.result = score
-        p1.result_date = datetime.datetime.now()
+        p1.result_date = timezone.now()
         p1.save()
 
     # get the truth for the exercise

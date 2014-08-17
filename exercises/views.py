@@ -133,19 +133,20 @@ def ExerciseForm(request, discipline, exo_number):
         k += 1
 
     score = round((sum(truth_mask)*100)/len(truth_mask))
+    if score == 100:
+        not_perfect = False
+    else:
+        not_perfect = True
     if score < 50:    # translate score in number to letters
         score = 'C'
     elif score < 75:
         score = 'B'
     else:
         score = 'A'
-    if score == 100:
-        perfect = True
-    else:
-        perfect = False
+
     # export to the template
     truth = list(zip(exo_list, truth_mask))
-    context = {'exo_list': exo_list, 'discipline': discipline, 'truth': truth, 'new': new, 'score': score, 'perfect': perfect}
+    context = {'exo_list': exo_list, 'discipline': discipline, 'truth': truth, 'new': new, 'score': score, 'not_perfect': not_perfect}
     return render(request, 'exercises/exercise_form.html', context)
 
 

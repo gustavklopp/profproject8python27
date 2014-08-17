@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.utils.encoding import python_2_unicode_compatible
 
 import os
@@ -12,7 +13,8 @@ class Discipline(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.name
+        name = self.name
+        return name
 
     class Meta:
         verbose_name = u"1. Matière"
